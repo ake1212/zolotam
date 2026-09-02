@@ -16,18 +16,21 @@ export function FeaturedCard({ listing }: { listing: Listing }) {
     <button
       type="button"
       onClick={() => navigate(`/listing/${listing.id}`)}
-      className="press"
+      className="press card-press"
       style={{
-        flex: '0 0 176px',
+        flex: '0 0 186px',
         cursor: 'pointer',
-        background: 'none',
-        border: 'none',
+        background: 'var(--surface)',
+        border: '1px solid var(--surface-edge)',
+        borderRadius: 'var(--r-md)',
+        boxShadow: 'var(--shadow-sm)',
+        overflow: 'hidden',
         padding: 0,
         textAlign: 'left',
         font: 'inherit',
       }}
     >
-      <ArtTile width={176} height={116} rule style={{ marginBottom: 11 }}>
+      <ArtTile width="100%" height={112} rule radius="13px 13px 0 0">
         {listing.cover ? (
           <img
             src={listing.cover}
@@ -38,29 +41,31 @@ export function FeaturedCard({ listing }: { listing: Listing }) {
           <PillarIcon index={listing.pillarIdx} color="rgba(168,129,58,0.9)" size={30} />
         )}
       </ArtTile>
-      <div
-        style={{
-          fontSize: 8.5,
-          fontWeight: 600,
-          color: 'var(--gold)',
-          letterSpacing: '0.16em',
-          marginBottom: 5,
-        }}
-      >
-        {pillarName(listing.pillarIdx).toUpperCase()}
+      <div style={{ padding: '12px 14px 14px' }}>
+        <div
+          style={{
+            fontSize: 8.5,
+            fontWeight: 600,
+            color: 'var(--gold)',
+            letterSpacing: '0.16em',
+            marginBottom: 5,
+          }}
+        >
+          {pillarName(listing.pillarIdx).toUpperCase()}
+        </div>
+        <div
+          style={{
+            fontSize: 13.5,
+            fontWeight: 600,
+            color: 'var(--ink)',
+            lineHeight: 1.3,
+            letterSpacing: '-0.015em',
+          }}
+        >
+          {listing.name}
+        </div>
+        <div style={{ fontSize: 11.5, color: 'var(--ink-50)', marginTop: 3 }}>{listing.city}</div>
       </div>
-      <div
-        style={{
-          fontSize: 13.5,
-          fontWeight: 600,
-          color: 'var(--ink)',
-          lineHeight: 1.3,
-          letterSpacing: '-0.015em',
-        }}
-      >
-        {listing.name}
-      </div>
-      <div style={{ fontSize: 11.5, color: 'var(--ink-50)', marginTop: 3 }}>{listing.city}</div>
     </button>
   );
 }
@@ -72,17 +77,18 @@ export function ListingRow({ listing }: { listing: Listing }) {
     <button
       type="button"
       onClick={() => navigate(`/listing/${listing.id}`)}
-      className="press"
+      className="press card-press"
       style={{
         display: 'flex',
-        gap: 15,
-        padding: '18px 0',
+        gap: 14,
+        padding: 12,
         cursor: 'pointer',
         alignItems: 'center',
         width: '100%',
-        background: 'none',
-        border: 'none',
-        borderBottom: '1px solid var(--rule)',
+        background: 'var(--surface)',
+        border: '1px solid var(--surface-edge)',
+        borderRadius: 'var(--r-md)',
+        boxShadow: 'var(--shadow-sm)',
         textAlign: 'left',
         font: 'inherit',
       }}

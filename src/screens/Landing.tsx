@@ -49,6 +49,7 @@ export function Landing() {
                 style={{
                   width: 34,
                   height: 34,
+                  borderRadius: 'var(--r-xs)',
                   border: '1px solid rgba(246,242,234,0.28)',
                   display: 'flex',
                   alignItems: 'center',

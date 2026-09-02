@@ -19,7 +19,15 @@ const TABS: Array<{ key: Tab; label: string }> = [
 
 function AdminStat({ value, label, gold = false }: { value: string; label: string; gold?: boolean }) {
   return (
-    <div style={{ flex: 1, background: 'var(--ink)', padding: '14px 12px' }}>
+    <div
+      style={{
+        flex: 1,
+        background: 'var(--surface-dark)',
+        border: '1px solid rgba(246,242,234,0.08)',
+        borderRadius: 'var(--r-sm)',
+        padding: '13px 12px',
+      }}
+    >
       <div
         style={{
           fontSize: 22,
@@ -56,9 +64,10 @@ function ActionButton({
       onClick={onClick}
       className="press"
       style={{
-        padding: small ? '8px 18px' : '9px 20px',
+        padding: small ? '8px 17px' : '9px 19px',
         background: primary ? 'var(--ink)' : 'transparent',
-        border: primary ? 'none' : '1px solid rgba(20,18,15,0.22)',
+        border: primary ? '1px solid var(--ink)' : '1px solid rgba(20,18,15,0.22)',
+        borderRadius: 'var(--r-pill)',
         color: primary ? 'var(--paper)' : 'rgba(20,18,15,0.7)',
         fontSize: small ? 11 : 11.5,
         fontWeight: primary ? 600 : 500,
@@ -99,7 +108,14 @@ export function Admin() {
 
   return (
     <AppShell>
-      <div style={{ background: 'var(--ink)', padding: 'calc(var(--safe-top) + 68px) 24px 24px' }}>
+      <div
+        style={{
+          background: 'var(--ink)',
+          padding: 'calc(var(--safe-top) + 68px) 24px 24px',
+          borderBottomLeftRadius: 'var(--r-lg)',
+          borderBottomRightRadius: 'var(--r-lg)',
+        }}
+      >
         <BackLink
           dark
           label="EXIT"
@@ -130,7 +146,7 @@ export function Admin() {
         >
           Administration
         </div>
-        <div style={{ display: 'flex', gap: 1, background: 'var(--paper-rule)' }}>
+        <div style={{ display: 'flex', gap: 7 }}>
           <AdminStat value={String(pendingUsers.length)} label="USERS PENDING" gold />
           <AdminStat value={String(pendingListings.length)} label="LISTINGS PENDING" gold />
           <AdminStat value={memberCount.toLocaleString('en-US')} label="MEMBERS" />
@@ -173,7 +189,17 @@ export function Admin() {
         {tab === 'users' ? (
           <>
             {pendingUsers.map((u) => (
-              <div key={u.id} style={{ padding: '18px 0', borderBottom: '1px solid var(--rule)' }}>
+              <div
+                key={u.id}
+                style={{
+                  padding: 16,
+                  marginBottom: 10,
+                  background: 'var(--surface)',
+                  border: '1px solid var(--surface-edge)',
+                  borderRadius: 'var(--r-md)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+              >
                 <div
                   style={{
                     fontSize: 8.5,
@@ -207,7 +233,16 @@ export function Admin() {
             {pendingListings.map((l) => (
               <div
                 key={l.id}
-                style={{ display: 'flex', gap: 14, padding: '18px 0', borderBottom: '1px solid var(--rule)' }}
+                style={{
+                  display: 'flex',
+                  gap: 14,
+                  padding: 16,
+                  marginBottom: 10,
+                  background: 'var(--surface)',
+                  border: '1px solid var(--surface-edge)',
+                  borderRadius: 'var(--r-md)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
               >
                 <ArtTile width={52} height={52}>
                   {l.logo ? (

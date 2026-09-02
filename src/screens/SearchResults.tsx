@@ -4,7 +4,7 @@ import { useApp } from '../store/AppContext';
 import { AppShell } from '../components/AppShell';
 import { ListingRow } from '../components/ListingViews';
 import { BackLink } from '../components/primitives';
-import { SearchGlass } from '../components/SearchGlass';
+import { SearchField } from '../components/SearchField';
 import { PILLARS, pillarName } from '../data/pillars';
 
 export function SearchResults() {
@@ -63,56 +63,40 @@ export function SearchResults() {
           {results.length} {results.length === 1 ? 'listing' : 'listings'}
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            borderBottom: '1px solid var(--rule-strong)',
-            paddingBottom: 10,
-            marginBottom: 8,
-          }}
-        >
-          <SearchGlass size={14} />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={pillarIdx !== null ? 'Refine this pillar' : 'Search businesses, services, cities'}
-            aria-label="Refine results"
-            style={{
-              flex: 1,
-              border: 'none',
-              background: 'transparent',
-              fontSize: 13.5,
-              color: 'var(--ink)',
-              outline: 'none',
-              padding: 0,
-            }}
-          />
-          {pillarIdx !== null ? (
-            <button
-              type="button"
-              onClick={() => navigate(query ? `/search?q=${encodeURIComponent(query)}` : '/search')}
-              style={{
-                fontSize: 9.5,
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                color: 'var(--ink-40)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 0,
-                fontFamily: 'inherit',
-              }}
-            >
-              ALL
-            </button>
-          ) : null}
-        </div>
+        <SearchField
+          value={query}
+          onChange={setQuery}
+          placeholder={pillarIdx !== null ? 'Refine this pillar' : 'Search businesses, services, cities'}
+          trailing={
+            pillarIdx !== null ? (
+              <button
+                type="button"
+                onClick={() => navigate(query ? `/search?q=${encodeURIComponent(query)}` : '/search')}
+                style={{
+                  fontSize: 9.5,
+                  fontWeight: 600,
+                  letterSpacing: '0.12em',
+                  color: 'var(--ink-40)',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px 0 4px 8px',
+                  borderLeft: '1px solid var(--rule)',
+                  fontFamily: 'inherit',
+                  flexShrink: 0,
+                }}
+              >
+                ALL PILLARS
+              </button>
+            ) : null
+          }
+        />
 
-        {results.map((l) => (
-          <ListingRow key={l.id} listing={l} />
-        ))}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 18 }}>
+          {results.map((l) => (
+            <ListingRow key={l.id} listing={l} />
+          ))}
+        </div>
 
         {results.length === 0 ? (
           <div style={{ padding: '50px 0', textAlign: 'center', fontSize: 13, color: 'var(--ink-40)' }}>

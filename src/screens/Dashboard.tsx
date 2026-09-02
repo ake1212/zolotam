@@ -85,7 +85,8 @@ export function Dashboard() {
         style={{
           background: 'var(--ink)',
           padding: 'calc(var(--safe-top) + 72px) 24px 28px',
-          marginBottom: 4,
+          borderBottomLeftRadius: 'var(--r-lg)',
+          borderBottomRightRadius: 'var(--r-lg)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
@@ -138,13 +139,22 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div style={{ padding: '20px 24px 32px' }}>
-        <Button variant="gold" onClick={() => navigate('/dashboard/new')} style={{ marginBottom: 28 }}>
+      <div style={{ padding: '22px 24px 32px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <Button variant="gold" onClick={() => navigate('/dashboard/new')} style={{ marginBottom: 18 }}>
           +&nbsp;&nbsp;Create a new listing
         </Button>
 
         {rows.map((row) => (
-          <div key={row.key}>
+          <div
+            key={row.key}
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--surface-edge)',
+              borderRadius: 'var(--r-md)',
+              boxShadow: 'var(--shadow-sm)',
+              overflow: 'hidden',
+            }}
+          >
             <button
               type="button"
               onClick={row.onClick}
@@ -153,12 +163,11 @@ export function Dashboard() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '17px 0',
+                padding: '16px 16px',
                 cursor: 'pointer',
                 width: '100%',
                 background: 'none',
                 border: 'none',
-                borderBottom: '1px solid var(--rule)',
                 textAlign: 'left',
                 fontFamily: 'inherit',
               }}
@@ -185,8 +194,8 @@ export function Dashboard() {
             {row.key === 'profile' && panel === 'profile' ? (
               <div
                 style={{
-                  padding: '16px 0 18px',
-                  borderBottom: '1px solid var(--rule)',
+                  padding: '14px 16px 18px',
+                  borderTop: '1px solid var(--rule)',
                   fontSize: 13,
                   color: 'rgba(20,18,15,0.6)',
                   lineHeight: 1.9,
@@ -200,7 +209,7 @@ export function Dashboard() {
             ) : null}
 
             {row.key === 'settings' && panel === 'settings' ? (
-              <div style={{ padding: '10px 0 8px', borderBottom: '1px solid var(--rule)' }}>
+              <div style={{ padding: '6px 16px 14px', borderTop: '1px solid var(--rule)' }}>
                 <SettingRow
                   label="Notifications"
                   value={settings.notifications ? 'On' : 'Off'}
@@ -223,15 +232,17 @@ export function Dashboard() {
                   // Clearing the session is enough: MemberRoute returns the
                   // visitor to the landing page on the next render.
                   onClick={logout}
+                  className="press"
                   style={{
-                    marginTop: 12,
-                    fontSize: 11.5,
-                    letterSpacing: '0.1em',
+                    marginTop: 14,
+                    fontSize: 11,
+                    letterSpacing: '0.12em',
                     fontWeight: 600,
                     color: 'var(--gold-deep)',
-                    background: 'none',
-                    border: 'none',
-                    padding: '4px 0',
+                    background: 'transparent',
+                    border: '1px solid rgba(141,108,46,0.35)',
+                    borderRadius: 'var(--r-pill)',
+                    padding: '9px 18px',
                     cursor: 'pointer',
                     fontFamily: 'inherit',
                   }}
@@ -242,7 +253,7 @@ export function Dashboard() {
             ) : null}
 
             {row.key === 'listings' && listingsOpen ? (
-              <div style={{ paddingTop: 8 }}>
+              <div style={{ padding: '0 16px 6px', borderTop: '1px solid var(--rule)' }}>
                 {mine.map((l) => (
                   <button
                     key={l.id}
@@ -253,12 +264,11 @@ export function Dashboard() {
                       display: 'flex',
                       gap: 14,
                       alignItems: 'center',
-                      padding: '16px 0',
+                      padding: '14px 0',
                       cursor: 'pointer',
                       width: '100%',
                       background: 'none',
                       border: 'none',
-                      borderBottom: '1px solid var(--rule)',
                       textAlign: 'left',
                       fontFamily: 'inherit',
                     }}
@@ -301,7 +311,7 @@ export function Dashboard() {
                   </button>
                 ))}
                 {mine.length === 0 ? (
-                  <div style={{ padding: '28px 0', fontSize: 13, color: 'var(--ink-40)' }}>
+                  <div style={{ padding: '22px 0', fontSize: 13, color: 'var(--ink-40)' }}>
                     You have no listings yet.
                   </div>
                 ) : null}

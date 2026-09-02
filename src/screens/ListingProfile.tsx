@@ -61,6 +61,8 @@ export function ListingProfile() {
           display: 'flex',
           alignItems: 'flex-end',
           overflow: 'hidden',
+          borderBottomLeftRadius: 'var(--r-lg)',
+          borderBottomRightRadius: 'var(--r-lg)',
         }}
       >
         {listing.cover ? (
@@ -144,8 +146,10 @@ export function ListingProfile() {
                 flex: 1,
                 padding: 13,
                 textAlign: 'center',
-                background: a.primary ? 'var(--ink)' : 'transparent',
-                border: a.primary ? 'none' : '1px solid rgba(20,18,15,0.22)',
+                background: a.primary ? 'var(--ink)' : 'var(--surface)',
+                border: a.primary ? '1px solid var(--ink)' : '1px solid var(--rule-strong)',
+                borderRadius: 'var(--r-sm)',
+                boxShadow: 'var(--shadow-sm)',
                 color: a.primary ? 'var(--paper)' : 'var(--ink)',
                 fontSize: 12.5,
                 fontWeight: a.primary ? 600 : 500,
@@ -172,8 +176,17 @@ export function ListingProfile() {
         {listing.services.length > 0 ? (
           <>
             <SectionLabel mb={14}>SERVICES</SectionLabel>
-            <div style={{ marginBottom: 30 }}>
-              {listing.services.map((s) => (
+            <div
+              style={{
+                marginBottom: 30,
+                background: 'var(--surface)',
+                border: '1px solid var(--surface-edge)',
+                borderRadius: 'var(--r-md)',
+                boxShadow: 'var(--shadow-sm)',
+                padding: '2px 16px',
+              }}
+            >
+              {listing.services.map((s, i) => (
                 <div
                   key={s}
                   style={{
@@ -181,7 +194,8 @@ export function ListingProfile() {
                     alignItems: 'center',
                     gap: 10,
                     padding: '11px 0',
-                    borderBottom: '1px solid rgba(20,18,15,0.08)',
+                    borderBottom:
+                      i < listing.services.length - 1 ? '1px solid rgba(20,18,15,0.08)' : 'none',
                   }}
                 >
                   <div style={{ width: 3, height: 3, background: 'var(--gold)', flexShrink: 0 }} />
@@ -208,7 +222,13 @@ export function ListingProfile() {
                   key={i}
                   src={p}
                   alt=""
-                  style={{ width: '100%', height: 78, objectFit: 'cover', display: 'block' }}
+                  style={{
+                    width: '100%',
+                    height: 78,
+                    objectFit: 'cover',
+                    display: 'block',
+                    borderRadius: 'var(--r-sm)',
+                  }}
                 />
               ))}
             </div>
@@ -216,10 +236,20 @@ export function ListingProfile() {
         ) : null}
 
         <SectionLabel mb={14}>DETAILS</SectionLabel>
-        <DetailRow label="Location" value={`${listing.city}, ${listing.country}`} />
-        <DetailRow label="Pillar" value={pillarName(listing.pillarIdx)} />
-        {listing.website ? <DetailRow label="Website" value={listing.website} /> : null}
-        <DetailRow label="Status" value={statusLabel} valueColor={statusColor} last />
+        <div
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--surface-edge)',
+            borderRadius: 'var(--r-md)',
+            boxShadow: 'var(--shadow-sm)',
+            padding: '2px 16px',
+          }}
+        >
+          <DetailRow label="Location" value={`${listing.city}, ${listing.country}`} />
+          <DetailRow label="Pillar" value={pillarName(listing.pillarIdx)} />
+          {listing.website ? <DetailRow label="Website" value={listing.website} /> : null}
+          <DetailRow label="Status" value={statusLabel} valueColor={statusColor} last />
+        </div>
       </div>
     </AppShell>
   );

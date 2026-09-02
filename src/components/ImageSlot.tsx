@@ -27,10 +27,13 @@ export function ImageSlot({
 
   return (
     <div
+      className="tile"
       style={{
         position: 'relative',
-        border: '1px solid var(--rule-strong)',
-        background: value ? 'var(--panel)' : 'transparent',
+        border: value ? '1px solid var(--surface-edge)' : '1.5px dashed rgba(20,18,15,0.22)',
+        borderRadius: 'var(--r-md)',
+        background: value ? 'var(--panel)' : 'var(--surface)',
+        boxShadow: value ? 'var(--shadow-sm)' : 'none',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -56,15 +59,16 @@ export function ImageSlot({
             onClick={() => onChange(null)}
             style={{
               position: 'absolute',
-              top: 4,
-              right: 4,
-              width: 18,
-              height: 18,
+              top: 5,
+              right: 5,
+              width: 20,
+              height: 20,
+              borderRadius: 'var(--r-pill)',
               lineHeight: 1,
               border: 'none',
-              background: 'rgba(20,18,15,0.75)',
+              background: 'rgba(20,18,15,0.78)',
               color: 'var(--paper)',
-              fontSize: 11,
+              fontSize: 12,
               cursor: 'pointer',
               padding: 0,
             }}

@@ -2,8 +2,8 @@ import { PILLARS } from '../data/pillars';
 import { PillarIcon } from './PillarIcon';
 
 /**
- * The 4×4 pillar table. The 1px grid gap doubles as the hairline rule —
- * the container's background shows through between cells.
+ * The 4×4 pillar table as separated, raised tiles. Selecting one inverts it to
+ * ink with a gold glyph.
  */
 export function PillarGrid({
   onSelect,
@@ -19,8 +19,7 @@ export function PillarGrid({
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 1,
-        background: 'var(--rule)',
+        gap: 7,
         ...style,
       }}
     >
@@ -32,16 +31,20 @@ export function PillarGrid({
             type="button"
             onClick={() => onSelect(idx)}
             aria-pressed={selectedIdx === null ? undefined : selected}
-            className="press"
+            className="press tile"
             style={{
-              background: selected ? 'var(--ink)' : 'var(--paper)',
-              padding: '14px 4px 12px',
+              background: selected ? 'var(--ink)' : 'var(--surface)',
+              border: `1px solid ${selected ? 'var(--ink)' : 'var(--surface-edge)'}`,
+              borderRadius: 'var(--r-sm)',
+              boxShadow: selected ? 'var(--shadow-md)' : 'var(--shadow-sm)',
+              padding: '13px 3px 11px',
+              minHeight: 78,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: 9,
               cursor: 'pointer',
-              border: 'none',
               font: 'inherit',
             }}
           >
@@ -51,7 +54,7 @@ export function PillarGrid({
                 fontSize: 8.5,
                 textAlign: 'center',
                 lineHeight: 1.25,
-                color: selected ? 'rgba(246,242,234,0.8)' : 'var(--ink-72)',
+                color: selected ? 'rgba(246,242,234,0.82)' : 'var(--ink-72)',
                 fontWeight: 500,
                 letterSpacing: '0.02em',
               }}

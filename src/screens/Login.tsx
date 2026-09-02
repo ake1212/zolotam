@@ -93,8 +93,11 @@ export function Login() {
             fontSize: 11,
             lineHeight: 1.8,
             color: 'var(--ink-40)',
-            borderTop: '1px solid var(--rule)',
-            paddingTop: 16,
+            background: 'var(--surface)',
+            border: '1px solid var(--surface-edge)',
+            borderRadius: 'var(--r-md)',
+            boxShadow: 'var(--shadow-sm)',
+            padding: '14px 16px',
             marginBottom: 22,
           }}
         >

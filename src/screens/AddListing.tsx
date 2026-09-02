@@ -164,7 +164,8 @@ export function AddListing() {
               key={n}
               style={{
                 flex: 1,
-                height: 2,
+                height: 3,
+                borderRadius: 'var(--r-pill)',
                 background: n <= step ? 'var(--ink)' : 'rgba(20,18,15,0.14)',
               }}
             />
@@ -327,8 +328,17 @@ export function AddListing() {
             <p style={{ fontSize: 13, color: 'var(--ink-50)', margin: '0 0 24px' }}>
               This is how buyers will see you.
             </p>
-            <div style={{ border: '1px solid rgba(20,18,15,0.14)', marginBottom: 30 }}>
-              <ArtTile height={120} rule>
+            <div
+              style={{
+                border: '1px solid var(--surface-edge)',
+                borderRadius: 'var(--r-md)',
+                background: 'var(--surface)',
+                boxShadow: 'var(--shadow-md)',
+                overflow: 'hidden',
+                marginBottom: 30,
+              }}
+            >
+              <ArtTile height={120} rule radius="13px 13px 0 0">
                 {cover ? (
                   <img
                     src={cover}

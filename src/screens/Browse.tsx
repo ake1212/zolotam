@@ -5,7 +5,7 @@ import { AppShell } from '../components/AppShell';
 import { PillarGrid } from '../components/PillarGrid';
 import { FeaturedCard } from '../components/ListingViews';
 import { SectionRule } from '../components/primitives';
-import { SearchGlass } from '../components/SearchGlass';
+import { SearchField } from '../components/SearchField';
 
 export function Browse() {
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export function Browse() {
               style={{
                 width: 28,
                 height: 28,
+                borderRadius: 'var(--r-xs)',
                 background: 'var(--ink)',
                 display: 'flex',
                 alignItems: 'center',
@@ -116,35 +117,12 @@ export function Browse() {
           need to know.
         </h1>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            borderBottom: '1px solid var(--rule-strong)',
-            paddingBottom: 11,
-            marginBottom: 34,
-          }}
-        >
-          <SearchGlass size={15} />
-          <input
+        <div style={{ marginBottom: 34 }}>
+          <SearchField
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') runSearch();
-            }}
-            enterKeyHint="search"
+            onChange={setQuery}
+            onSubmit={runSearch}
             placeholder="Search businesses, services, cities"
-            aria-label="Search the marketplace"
-            style={{
-              flex: 1,
-              border: 'none',
-              background: 'transparent',
-              fontSize: 14,
-              color: 'var(--ink)',
-              outline: 'none',
-              padding: 0,
-            }}
           />
         </div>
 

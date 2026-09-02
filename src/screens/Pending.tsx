@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../store/AppContext';
 import { AppShell } from '../components/AppShell';
-import { Button, MarkFrame } from '../components/primitives';
+import { Button, Chip, MarkFrame } from '../components/primitives';
 import { DEMO_MEMBER_ID } from '../data/seed';
 
 export function Pending() {
@@ -35,26 +35,24 @@ export function Pending() {
           <br />
           received.
         </h1>
-        <div
-          style={{
-            display: 'inline-block',
-            padding: '6px 13px',
-            border: '1px solid var(--rule-strong)',
-            fontSize: 9.5,
-            fontWeight: 600,
-            letterSpacing: '0.16em',
-            color: 'rgba(20,18,15,0.6)',
-            marginBottom: 24,
-          }}
-        >
-          UNDER REVIEW
+        <div style={{ marginBottom: 24 }}>
+          <Chip tone="gold">UNDER REVIEW</Chip>
         </div>
         <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-55)', margin: '0 0 40px' }}>
           Our team reviews every application by hand — usually within two business days. You'll
           receive an email the moment your membership opens.
         </p>
 
-        <div style={{ borderTop: '1px solid rgba(20,18,15,0.1)', paddingTop: 24, marginBottom: 36 }}>
+        <div
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--surface-edge)',
+            borderRadius: 'var(--r-md)',
+            boxShadow: 'var(--shadow-sm)',
+            padding: 18,
+            marginBottom: 30,
+          }}
+        >
           <div
             style={{
               fontSize: 9.5,

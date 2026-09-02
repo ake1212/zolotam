@@ -23,6 +23,26 @@
   --paper-45: rgba(246, 242, 234, 0.45);
   --paper-rule: rgba(246, 242, 234, 0.14);
 
+  /* Raised surface, a shade lighter than the paper ground so a card reads as
+     lifted off the page rather than drawn on it. */
+  --surface: #fdfbf6;
+  --surface-edge: rgba(20, 18, 15, 0.07);
+  /* Its counterpart on the dark grounds. */
+  --surface-dark: #221e19;
+
+  /* Radius scale, by role: chips, controls, cards, panels, the device itself. */
+  --r-xs: 7px;
+  --r-sm: 11px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-device: 34px;
+  --r-pill: 999px;
+
+  /* Two soft, warm-tinted elevations — neutral grey shadow would read cold
+     against the paper. */
+  --shadow-sm: 0 1px 2px rgba(38, 30, 18, 0.05), 0 3px 10px rgba(38, 30, 18, 0.04);
+  --shadow-md: 0 2px 5px rgba(38, 30, 18, 0.06), 0 14px 30px rgba(38, 30, 18, 0.07);
+
   --font: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* Notch / home-bar clearance. Falls back to 0 in a desktop browser. */
@@ -75,20 +95,65 @@ textarea,
 select {
   font-family: var(--font);
   letter-spacing: -0.01em;
-  border-radius: 0;
 }
 
 ::placeholder {
   color: rgba(20, 18, 15, 0.32);
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--ink) !important;
+/* Boxed fields: a raised well that darkens its edge and lifts a soft gold ring
+   on focus, so the active field is unmistakable. */
+.field {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-sm);
+  outline: none;
+  transition:
+    border-color 130ms ease,
+    box-shadow 130ms ease;
 }
 
-/* Keyboard focus is visible, pointer focus is not — the design has no focus rings. */
+.field:hover {
+  border-color: rgba(20, 18, 15, 0.28);
+}
+
+.field:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(168, 129, 58, 0.16);
+}
+
+.field--error {
+  border-color: var(--gold-deep);
+}
+
+.field--error:focus {
+  box-shadow: 0 0 0 3px rgba(141, 108, 46, 0.18);
+}
+
+/* Chevron for the pillar select, whose native arrow appearance is removed. */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -6px;
+  border-right: 1.6px solid var(--ink-45);
+  border-bottom: 1.6px solid var(--ink-45);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+/* Keyboard focus is visible, pointer focus is not. */
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
@@ -132,6 +197,7 @@ select:focus {
   .device {
     width: 390px;
     height: min(844px, calc(100dvh - 96px));
+    border-radius: var(--r-device);
     box-shadow: 0 24px 70px rgba(20, 18, 15, 0.18);
   }
 }
@@ -146,9 +212,36 @@ select:focus {
 }
 
 .press {
-  transition: opacity 120ms ease;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease;
 }
 
 .press:active {
-  opacity: 0.62;
+  opacity: 0.78;
+  transform: scale(0.985);
+}
+
+/* Raised tiles and cards lift slightly under the cursor. */
+@media (hover: hover) {
+  .tile:hover,
+  .card-press:hover {
+    border-color: rgba(20, 18, 15, 0.16);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press,
+  .tile,
+  .card-press,
+  .field {
+    transition: none;
+  }
+
+  .press:active {
+    transform: none;
+  }
 }

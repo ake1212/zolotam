@@ -85,9 +85,27 @@ export function BackLink({
 type ButtonVariant = 'ink' | 'paper' | 'gold' | 'outline' | 'outlineDark';
 
 const VARIANTS: Record<ButtonVariant, CSSProperties> = {
-  ink: { background: 'var(--ink)', color: 'var(--paper)', border: 'none', fontWeight: 600 },
-  paper: { background: 'var(--paper)', color: 'var(--ink)', border: 'none', fontWeight: 600 },
-  gold: { background: 'var(--gold)', color: 'var(--ink)', border: 'none', fontWeight: 600 },
+  ink: {
+    background: 'var(--ink)',
+    color: 'var(--paper)',
+    border: 'none',
+    fontWeight: 600,
+    boxShadow: 'var(--shadow-sm)',
+  },
+  paper: {
+    background: 'var(--paper)',
+    color: 'var(--ink)',
+    border: 'none',
+    fontWeight: 600,
+    boxShadow: '0 2px 14px rgba(0,0,0,0.22)',
+  },
+  gold: {
+    background: 'var(--gold)',
+    color: 'var(--ink)',
+    border: 'none',
+    fontWeight: 600,
+    boxShadow: 'var(--shadow-sm)',
+  },
   outline: {
     background: 'transparent',
     color: 'var(--ink)',
@@ -130,8 +148,16 @@ export function Button({
         letterSpacing: '-0.01em',
         cursor: disabled ? 'default' : 'pointer',
         fontFamily: 'inherit',
+        borderRadius: 'var(--r-sm)',
         ...VARIANTS[variant],
-        ...(disabled ? { background: 'rgba(20,18,15,0.3)', color: 'var(--paper)', border: 'none' } : null),
+        ...(disabled
+          ? {
+              background: 'rgba(20,18,15,0.22)',
+              color: 'var(--paper)',
+              border: 'none',
+              boxShadow: 'none',
+            }
+          : null),
         ...style,
       }}
     >
@@ -142,17 +168,7 @@ export function Button({
 
 /* ── Form fields ────────────────────────────────────────────────────── */
 
-const underlineInput: CSSProperties = {
-  width: '100%',
-  boxSizing: 'border-box',
-  padding: '0 0 11px',
-  border: 'none',
-  borderBottom: '1px solid var(--rule-strong)',
-  background: 'transparent',
-  fontSize: 15,
-  color: 'var(--ink)',
-  outline: 'none',
-};
+const fieldClass = (error?: string) => `field${error ? ' field--error' : ''}`;
 
 interface FieldProps {
   label: string;
@@ -179,15 +195,12 @@ export function Field({
     <div style={style}>
       <label style={{ ...eyebrow, display: 'block', marginBottom: 9 }}>{label}</label>
       <input
+        className={fieldClass(error)}
         type={type}
         value={value}
         placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={(e) => onChange(e.target.value)}
-        style={{
-          ...underlineInput,
-          borderBottomColor: error ? 'var(--gold)' : 'var(--rule-strong)',
-        }}
       />
       {error ? <FieldError>{error}</FieldError> : null}
     </div>
@@ -206,17 +219,12 @@ export function TextAreaField({
     <div>
       <label style={{ ...eyebrow, display: 'block', marginBottom: 9 }}>{label}</label>
       <textarea
+        className={fieldClass(error)}
         rows={rows}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        style={{
-          ...underlineInput,
-          resize: 'none',
-          fontFamily: 'inherit',
-          lineHeight: 1.5,
-          borderBottomColor: error ? 'var(--gold)' : 'var(--rule-strong)',
-        }}
+        style={{ resize: 'none', fontFamily: 'inherit', lineHeight: 1.5, display: 'block' }}
       />
       {error ? <FieldError>{error}</FieldError> : null}
     </div>
@@ -241,24 +249,26 @@ export function SelectField({
   return (
     <div>
       <label style={{ ...eyebrow, display: 'block', marginBottom: 9 }}>{label}</label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          ...underlineInput,
-          WebkitAppearance: 'none',
-          appearance: 'none',
-          color: value ? 'var(--ink)' : 'rgba(20,18,15,0.32)',
-          borderBottomColor: error ? 'var(--gold)' : 'var(--rule-strong)',
-        }}
-      >
-        <option value="">{placeholder}</option>
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
+      <div className="select-wrap">
+        <select
+          className={fieldClass(error)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          style={{
+            WebkitAppearance: 'none',
+            appearance: 'none',
+            paddingRight: 40,
+            color: value ? 'var(--ink)' : 'rgba(20,18,15,0.32)',
+          }}
+        >
+          <option value="">{placeholder}</option>
+          {options.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
+        </select>
+      </div>
       {error ? <FieldError>{error}</FieldError> : null}
     </div>
   );
@@ -284,6 +294,8 @@ export function MarkFrame() {
         width: 52,
         height: 52,
         border: '1px solid var(--gold)',
+        borderRadius: 'var(--r-md)',
+        background: 'rgba(168,129,58,0.07)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -294,18 +306,74 @@ export function MarkFrame() {
   );
 }
 
+/** Small caps status chip. */
+export function Chip({
+  children,
+  tone = 'neutral',
+}: {
+  children: ReactNode;
+  tone?: 'neutral' | 'gold';
+}) {
+  const gold = tone === 'gold';
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        padding: '6px 13px',
+        border: `1px solid ${gold ? 'rgba(168,129,58,0.45)' : 'var(--rule-strong)'}`,
+        background: gold ? 'rgba(168,129,58,0.09)' : 'var(--surface)',
+        borderRadius: 'var(--r-pill)',
+        fontSize: 9.5,
+        fontWeight: 600,
+        letterSpacing: '0.16em',
+        color: gold ? 'var(--gold-deep)' : 'rgba(20,18,15,0.6)',
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** Raised panel: the standard container for a group of related content. */
+export function Card({
+  children,
+  padding = 18,
+  style,
+}: {
+  children: ReactNode;
+  padding?: number | string;
+  style?: CSSProperties;
+}) {
+  return (
+    <div
+      style={{
+        background: 'var(--surface)',
+        border: '1px solid var(--surface-edge)',
+        borderRadius: 'var(--r-md)',
+        boxShadow: 'var(--shadow-sm)',
+        padding,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /** Dark tile that stands in for listing imagery, with the gold top hairline. */
 export function ArtTile({
   children,
   height,
   width,
   rule = false,
+  radius = 'var(--r-sm)',
   style,
 }: {
   children: ReactNode;
   height: number | string;
   width?: number | string;
   rule?: boolean;
+  radius?: string;
   style?: CSSProperties;
 }) {
   return (
@@ -320,11 +388,12 @@ export function ArtTile({
         position: 'relative',
         flexShrink: 0,
         overflow: 'hidden',
+        borderRadius: radius,
         ...style,
       }}
     >
       {rule ? (
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'var(--gold)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'var(--gold)' }} />
       ) : null}
       {children}
     </div>

@@ -61,8 +61,9 @@ export function TabBar() {
           >
             <div
               style={{
-                width: 16,
-                height: 2,
+                width: 18,
+                height: 3,
+                borderRadius: 'var(--r-pill)',
                 background: active ? 'var(--gold)' : 'transparent',
                 marginBottom: 9,
               }}
