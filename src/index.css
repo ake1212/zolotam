@@ -1,0 +1,154 @@
+/* MPUGLOBAL — global reset and design tokens.
+   Values mirror the Claude Design prototype (MPUGLOBAL v2) exactly. */
+
+:root {
+  --ink: #14120f;
+  --paper: #f6f2ea;
+  --backdrop: #e7e1d6;
+  --gold: #a8813a;
+  --gold-deep: #8d6c2e;
+  --panel: #1b1814;
+
+  --ink-72: rgba(20, 18, 15, 0.72);
+  --ink-55: rgba(20, 18, 15, 0.55);
+  --ink-50: rgba(20, 18, 15, 0.5);
+  --ink-45: rgba(20, 18, 15, 0.45);
+  --ink-42: rgba(20, 18, 15, 0.42);
+  --ink-40: rgba(20, 18, 15, 0.4);
+  --ink-30: rgba(20, 18, 15, 0.3);
+  --rule: rgba(20, 18, 15, 0.09);
+  --rule-strong: rgba(20, 18, 15, 0.18);
+
+  --paper-60: rgba(246, 242, 234, 0.6);
+  --paper-45: rgba(246, 242, 234, 0.45);
+  --paper-rule: rgba(246, 242, 234, 0.14);
+
+  --font: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Notch / home-bar clearance. Falls back to 0 in a desktop browser. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--backdrop);
+  color: var(--ink);
+  font-family: var(--font);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100%;
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--gold-deep);
+}
+
+button {
+  font-family: inherit;
+  letter-spacing: -0.01em;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font);
+  letter-spacing: -0.01em;
+  border-radius: 0;
+}
+
+::placeholder {
+  color: rgba(20, 18, 15, 0.32);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ink) !important;
+}
+
+/* Keyboard focus is visible, pointer focus is not — the design has no focus rings. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ── Device shell ──────────────────────────────────────────────────────
+   Full-bleed on a phone. On a wide viewport the app settles into a 390px
+   column on the warm backdrop — the composition the design was drawn in. */
+
+.backdrop {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--backdrop);
+}
+
+.device {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  overflow: hidden;
+  position: relative;
+}
+
+.deviceScroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+@media (min-width: 480px) and (min-height: 720px) {
+  .backdrop {
+    padding: 48px 20px;
+  }
+
+  .device {
+    width: 390px;
+    height: min(844px, calc(100dvh - 96px));
+    box-shadow: 0 24px 70px rgba(20, 18, 15, 0.18);
+  }
+}
+
+/* Hide scrollbars on the horizontal rails without losing scrollability. */
+.rail {
+  scrollbar-width: none;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.press {
+  transition: opacity 120ms ease;
+}
+
+.press:active {
+  opacity: 0.62;
+}
