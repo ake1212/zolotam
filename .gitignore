@@ -7,3 +7,8 @@ dist-artifact
 .env
 .env.*
 !.env.example
+
+# Agent tooling installed locally via `npx skills add` — not app code.
+.agents
+.claude
+skills-lock.json

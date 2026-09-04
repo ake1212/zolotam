@@ -127,7 +127,7 @@ set search_path = public
 as $$
   select exists (
     select 1 from public.profiles
-    where id = auth.uid() and role = 'admin'
+    where id = (select auth.uid()) and role = 'admin'
   );
 $$;
 
@@ -140,7 +140,7 @@ set search_path = public
 as $$
   select exists (
     select 1 from public.profiles
-    where id = auth.uid() and (status = 'approved' or role = 'admin')
+    where id = (select auth.uid()) and (status = 'approved' or role = 'admin')
   );
 $$;
 
@@ -251,17 +251,17 @@ alter table public.listings enable row level security;
 
 -- Profiles are private. You see yourself; an admin sees the queue.
 create policy profiles_select on public.profiles
-  for select using (id = auth.uid() or public.is_admin());
+  for select using (id = (select auth.uid()) or public.is_admin());
 
 -- The sign-up trigger inserts as definer, so this only covers a client
 -- backfilling its own missing row.
 create policy profiles_insert on public.profiles
-  for insert with check (id = auth.uid());
+  for insert with check (id = (select auth.uid()));
 
 -- Column-level limits come from guard_profile_privileges above.
 create policy profiles_update on public.profiles
-  for update using (id = auth.uid() or public.is_admin())
-  with check (id = auth.uid() or public.is_admin());
+  for update using (id = (select auth.uid()) or public.is_admin())
+  with check (id = (select auth.uid()) or public.is_admin());
 
 create policy profiles_delete on public.profiles
   for delete using (public.is_admin());
@@ -271,20 +271,20 @@ create policy profiles_delete on public.profiles
 create policy listings_select on public.listings
   for select using (
     status = 'published'
-    or owner_id = auth.uid()
+    or owner_id = (select auth.uid())
     or public.is_admin()
   );
 
 -- Only an approved member may list. A pending applicant cannot.
 create policy listings_insert on public.listings
-  for insert with check (owner_id = auth.uid() and public.is_approved());
+  for insert with check (owner_id = (select auth.uid()) and public.is_approved());
 
 create policy listings_update on public.listings
-  for update using (owner_id = auth.uid() or public.is_admin())
-  with check (owner_id = auth.uid() or public.is_admin());
+  for update using (owner_id = (select auth.uid()) or public.is_admin())
+  with check (owner_id = (select auth.uid()) or public.is_admin());
 
 create policy listings_delete on public.listings
-  for delete using (owner_id = auth.uid() or public.is_admin());
+  for delete using (owner_id = (select auth.uid()) or public.is_admin());
 
 -- ── public counters ──────────────────────────────────────────────────────
 --
@@ -345,19 +345,19 @@ create policy listing_media_insert on storage.objects
   for insert to authenticated
   with check (
     bucket_id = 'listing-media'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 create policy listing_media_update on storage.objects
   for update to authenticated
   using (
     bucket_id = 'listing-media'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 create policy listing_media_delete on storage.objects
   for delete to authenticated
   using (
     bucket_id = 'listing-media'
-    and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin())
+    and ((storage.foldername(name))[1] = (select auth.uid())::text or public.is_admin())
   );
