@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "comment": "Client-side routing: the app owns /browse, /login, /listing/:id and the rest — none of them exist as files on disk. Without this, opening a link to one directly (or just refreshing the page) returns Vercel's 404 instead of the app. Static assets still win, because rewrites are only consulted after a real file fails to match.",
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
