@@ -11,12 +11,16 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  function submit() {
+  const [busy, setBusy] = useState(false);
+
+  async function submit() {
     if (!email.trim() || !password) {
       setError('Enter your email address and password.');
       return;
     }
-    const result = login(email, password);
+    setBusy(true);
+    const result = await login(email, password);
+    setBusy(false);
     if (!result.ok) {
       setError(result.error);
       return;
@@ -84,8 +88,8 @@ export function Login() {
           <span style={{ fontSize: 12, color: 'var(--ink-45)' }}>Forgot password?</span>
         </div>
 
-        <Button type="submit" style={{ marginBottom: 20 }}>
-          Sign in
+        <Button type="submit" disabled={busy} style={{ marginBottom: 20 }}>
+          {busy ? 'Signing in…' : 'Sign in'}
         </Button>
 
         <div

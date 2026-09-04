@@ -40,6 +40,7 @@ export function Signup() {
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof Draft, string>>>({});
   const [formError, setFormError] = useState('');
+  const [busy, setBusy] = useState(false);
 
   function set<K extends keyof Draft>(key: K, value: Draft[K]) {
     setDraft((prev) => ({ ...prev, [key]: value }));
@@ -47,7 +48,7 @@ export function Signup() {
     setFormError('');
   }
 
-  function submit() {
+  async function submit() {
     const next: Partial<Record<keyof Draft, string>> = {};
     if (!draft.name.trim()) next.name = 'Tell us your name.';
     if (!EMAIL_RE.test(draft.email.trim())) next.email = 'Enter a valid email address.';
@@ -60,7 +61,9 @@ export function Signup() {
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
-    const result = register(draft);
+    setBusy(true);
+    const result = await register(draft);
+    setBusy(false);
     if (!result.ok) {
       setFormError(result.error);
       return;
@@ -157,8 +160,8 @@ export function Signup() {
 
         {formError ? <div style={{ marginTop: 22 }}><FieldError>{formError}</FieldError></div> : null}
 
-        <Button type="submit" style={{ margin: '38px 0 20px' }}>
-          Submit application
+        <Button type="submit" disabled={busy} style={{ margin: '38px 0 20px' }}>
+          {busy ? 'Sending…' : 'Submit application'}
         </Button>
         <div style={{ textAlign: 'center', fontSize: 13, color: 'var(--ink-50)' }}>
           Already a member?{' '}

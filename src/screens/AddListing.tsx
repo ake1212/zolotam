@@ -61,6 +61,8 @@ export function AddListing() {
   const [cover, setCover] = useState<string | null>(null);
   const [photos, setPhotos] = useState<Array<string | null>>([null, null, null]);
   const [errors, setErrors] = useState<Partial<Record<keyof Draft, string>>>({});
+  const [busy, setBusy] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   function set<K extends keyof Draft>(key: K, value: Draft[K]) {
     setDraft((prev) => ({ ...prev, [key]: value }));
@@ -92,8 +94,9 @@ export function AddListing() {
     else setStep((s) => s - 1);
   }
 
-  function submit() {
-    createListing({
+  async function submit() {
+    setBusy(true);
+    const result = await createListing({
       pillarIdx: pillarIdx ?? 0,
       name: draft.name,
       title: draft.title,
@@ -111,6 +114,11 @@ export function AddListing() {
       cover,
       photos: photos.filter((p): p is string => !!p),
     });
+    setBusy(false);
+    if (!result.ok) {
+      setSubmitError(result.error);
+      return;
+    }
     setStep(5);
   }
 
@@ -408,12 +416,21 @@ export function AddListing() {
               </div>
             </div>
             {pillarIdx === null ? <FieldError>Choose a pillar before submitting.</FieldError> : null}
+            {submitError ? (
+              <div style={{ marginBottom: 14 }}>
+                <FieldError>{submitError}</FieldError>
+              </div>
+            ) : null}
             <div style={{ display: 'flex', gap: 10 }}>
               <Button variant="outline" onClick={back}>
                 Back
               </Button>
-              <Button variant="gold" onClick={submit} disabled={pillarIdx === null}>
-                Submit
+              <Button
+                variant="gold"
+                onClick={() => void submit()}
+                disabled={pillarIdx === null || busy}
+              >
+                {busy ? 'Sending…' : 'Submit'}
               </Button>
             </div>
           </>

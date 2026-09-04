@@ -1,19 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import { useApp } from '../store/AppContext';
 import { AppShell } from '../components/AppShell';
 import { Button, Chip, MarkFrame } from '../components/primitives';
-import { DEMO_MEMBER_ID } from '../data/seed';
 
 export function Pending() {
   const navigate = useNavigate();
-  const { login, users } = useApp();
-
-  /** Demo shortcut: step into the approved-member experience. */
-  function previewApproved() {
-    const demo = users.find((u) => u.id === DEMO_MEMBER_ID);
-    if (demo) login(demo.email, demo.password);
-    navigate('/dashboard');
-  }
 
   return (
     <AppShell topSpacer>
@@ -73,23 +63,6 @@ export function Pending() {
         <Button onClick={() => navigate('/browse')} style={{ marginBottom: 18 }}>
           Browse the marketplace
         </Button>
-        <div style={{ textAlign: 'center' }}>
-          <button
-            type="button"
-            onClick={previewApproved}
-            style={{
-              fontSize: 11,
-              color: 'rgba(20,18,15,0.35)',
-              letterSpacing: '0.06em',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-            }}
-          >
-            Preview the approved-member experience
-          </button>
-        </div>
       </div>
     </AppShell>
   );

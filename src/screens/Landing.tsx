@@ -26,7 +26,7 @@ const divider = { width: 1, background: 'var(--paper-rule)' };
 
 export function Landing() {
   const navigate = useNavigate();
-  const { memberCount, loginAsAdmin } = useApp();
+  const { memberCount } = useApp();
 
   return (
     <div className="backdrop">
@@ -144,10 +144,7 @@ export function Landing() {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  loginAsAdmin();
-                  navigate('/admin');
-                }}
+                onClick={() => navigate('/login')}
                 style={{
                   fontSize: 11,
                   color: 'rgba(246,242,234,0.3)',

@@ -4,3 +4,6 @@ dist-single
 dist-artifact
 *.local
 .DS_Store
+.env
+.env.*
+!.env.example

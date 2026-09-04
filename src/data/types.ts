@@ -17,7 +17,7 @@ export interface Listing {
   website: string;
   verified: boolean;
   status: ListingStatus;
-  /** Data URLs, held in memory only — never written to localStorage. */
+  /** Public URLs into the listing-media storage bucket. */
   logo: string | null;
   cover: string | null;
   photos: string[];
@@ -35,10 +35,11 @@ export interface User {
   org: string;
   /** Pillar name, as picked on the application form. */
   industry: string;
-  password: string;
   status: UserStatus;
   role: UserRole;
   memberSince: number;
+  /** Admin-set cap on simultaneously published listings. Not yet enforced. */
+  listingCap: number;
 }
 
 export interface Settings {

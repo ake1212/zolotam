@@ -1,4 +1,4 @@
-/** The sixteen pillars. Order is fixed — the index is the icon index. */
+/** The sixteen pillars. Order is fixed — the index is stored on every listing. */
 export const PILLARS = [
   'Building Materials',
   'Electronics',
@@ -17,9 +17,6 @@ export const PILLARS = [
   'Arts & Crafts',
   'Tourism & Hospitality',
 ] as const;
-
-/** Directory-wide listing totals shown in the admin pillar table. */
-export const PILLAR_COUNTS = [186, 142, 121, 98, 164, 87, 76, 64, 133, 91, 108, 52, 47, 39, 58, 74];
 
 export function pillarName(idx: number): string {
   return PILLARS[idx] ?? PILLARS[0];

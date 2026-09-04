@@ -4,10 +4,7 @@ import { useApp } from '../store/AppContext';
 import { AppShell } from '../components/AppShell';
 import { PillarIcon } from '../components/PillarIcon';
 import { ArtTile, BackLink } from '../components/primitives';
-import { PILLARS, PILLAR_COUNTS, pillarName } from '../data/pillars';
-import { SEED_LISTINGS } from '../data/seed';
-
-const SEED_LISTING_IDS = new Set(SEED_LISTINGS.map((l) => l.id));
+import { PILLARS, pillarName } from '../data/pillars';
 
 type Tab = 'users' | 'listings' | 'pillars';
 
@@ -85,7 +82,7 @@ export function Admin() {
   const {
     pendingUsers,
     pendingListings,
-    publishedListings,
+    pillarCounts,
     memberCount,
     approveUser,
     rejectUser,
@@ -95,15 +92,9 @@ export function Admin() {
   } = useApp();
   const [tab, setTab] = useState<Tab>('users');
 
-  /**
-   * PILLAR_COUNTS is the directory-wide total, which already accounts for the
-   * seeded listings — so only listings created in this session are added on top.
-   */
+  /** Published listings in a pillar, counted by the database. */
   function countFor(idx: number): number {
-    const extra = publishedListings.filter(
-      (l) => l.pillarIdx === idx && !SEED_LISTING_IDS.has(l.id),
-    ).length;
-    return (PILLAR_COUNTS[idx] ?? 0) + extra;
+    return pillarCounts[idx] ?? 0;
   }
 
   return (
