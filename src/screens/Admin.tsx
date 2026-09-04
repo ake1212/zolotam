@@ -65,8 +65,8 @@ function ActionButton({
       className="press"
       style={{
         padding: small ? '8px 17px' : '9px 19px',
-        background: primary ? 'var(--ink)' : 'transparent',
-        border: primary ? '1px solid var(--ink)' : '1px solid rgba(20,18,15,0.22)',
+        background: primary ? 'var(--ground)' : 'transparent',
+        border: primary ? '1px solid var(--ground)' : '1px solid rgba(20,18,15,0.22)',
         borderRadius: 'var(--r-pill)',
         color: primary ? 'var(--paper)' : 'rgba(20,18,15,0.7)',
         fontSize: small ? 11 : 11.5,
@@ -110,7 +110,7 @@ export function Admin() {
     <AppShell>
       <div
         style={{
-          background: 'var(--ink)',
+          background: 'var(--ground)',
           padding: 'calc(var(--safe-top) + 68px) 24px 24px',
           borderBottomLeftRadius: 'var(--r-lg)',
           borderBottomRightRadius: 'var(--r-lg)',

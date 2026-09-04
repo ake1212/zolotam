@@ -86,7 +86,7 @@ type ButtonVariant = 'ink' | 'paper' | 'gold' | 'outline' | 'outlineDark';
 
 const VARIANTS: Record<ButtonVariant, CSSProperties> = {
   ink: {
-    background: 'var(--ink)',
+    background: 'var(--ground)',
     color: 'var(--paper)',
     border: 'none',
     fontWeight: 600,

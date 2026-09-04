@@ -1,5 +1,7 @@
 /* MPUGLOBAL — global reset and design tokens.
-   Values mirror the Claude Design prototype (MPUGLOBAL v2) exactly. */
+   Values mirror the Claude Design prototype (MPUGLOBAL v2), except the dark
+   grounds: the near-black was rejected in review and replaced by the deep
+   forest green below. */
 
 :root {
   --ink: #14120f;
@@ -7,7 +9,12 @@
   --backdrop: #e7e1d6;
   --gold: #a8813a;
   --gold-deep: #8d6c2e;
-  --panel: #1b1814;
+
+  /* The dark ground. Deep forest green rather than near-black: it carries the
+     same weight, but antique brass and warm ivory sit on it as a considered
+     palette instead of a default. --ink stays a text colour only. */
+  --ground: #1b3328;
+  --panel: #22402f;
 
   --ink-72: rgba(20, 18, 15, 0.72);
   --ink-55: rgba(20, 18, 15, 0.55);
@@ -28,7 +35,7 @@
   --surface: #fdfbf6;
   --surface-edge: rgba(20, 18, 15, 0.07);
   /* Its counterpart on the dark grounds. */
-  --surface-dark: #221e19;
+  --surface-dark: #274736;
 
   /* Radius scale, by role: chips, controls, cards, panels, the device itself. */
   --r-xs: 7px;

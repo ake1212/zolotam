@@ -30,10 +30,10 @@ export function Landing() {
 
   return (
     <div className="backdrop">
-      <div className="device" style={{ background: 'var(--ink)' }}>
+      <div className="device" style={{ background: 'var(--ground)' }}>
         <div
           className="deviceScroll"
-          style={{ display: 'flex', flexDirection: 'column', background: 'var(--ink)' }}
+          style={{ display: 'flex', flexDirection: 'column', background: 'var(--ground)' }}
         >
           <div
             style={{

@@ -83,7 +83,7 @@ export function Dashboard() {
     <AppShell showTabBar>
       <div
         style={{
-          background: 'var(--ink)',
+          background: 'var(--ground)',
           padding: 'calc(var(--safe-top) + 72px) 24px 28px',
           borderBottomLeftRadius: 'var(--r-lg)',
           borderBottomRightRadius: 'var(--r-lg)',

@@ -17,7 +17,7 @@ interface Props {
 export function AppShell({ children, topSpacer = false, showTabBar = false, dark = false }: Props) {
   return (
     <div className="backdrop">
-      <div className="device" style={dark ? { background: 'var(--ink)' } : undefined}>
+      <div className="device" style={dark ? { background: 'var(--ground)' } : undefined}>
         {topSpacer ? <div style={{ height: 'calc(var(--safe-top) + 56px)', flexShrink: 0 }} /> : null}
         <main className="deviceScroll">{children}</main>
         {showTabBar ? <TabBar /> : null}
